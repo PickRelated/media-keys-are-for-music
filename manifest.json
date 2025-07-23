@@ -1,0 +1,40 @@
+{
+  "name": "Media keys are for music",
+  "version": "0.0.1",
+  "manifest_version": 3,
+  "description": "Media keys are for controlling the music!",
+  "default_locale": "en",
+  "background": {
+    "service_worker": "service-worker.js"
+  },
+  "permissions": ["tabs"],
+  "content_scripts": [
+    {
+      "matches": ["https://music.yandex.com/*", "https://music.yandex.ru/*"],
+      "js": ["index.js"]
+    }
+  ],
+  "commands": {
+    "play": {
+      "suggested_key": {
+        "default": "MediaPlayPause"
+      },
+      "description": "Play/pause",
+      "global": true
+    },
+    "next": {
+      "suggested_key": {
+        "default": "MediaNextTrack"
+      },
+      "description": "Next Track",
+      "global": true
+    },
+    "previous": {
+      "suggested_key": {
+        "default": "MediaPrevTrack"
+      },
+      "description": "Previous Track",
+      "global": true
+    }
+  }
+}
