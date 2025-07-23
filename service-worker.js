@@ -1,5 +1,35 @@
+import { io } from 'https://cdn.socket.io/4.8.1/socket.io.esm.min.js'
+
+const socket = io('ws://192.168.1.128:3333', { transports: ['websocket'] })
+socket.connect()
+socket.on('connect', () => console.info(`Connected to socket with id ${socket.id}`))
+socket.on('connect_error', (err) => console.error(err))
+
+const EVENT = 'message'
+
+const isLocal = false
+
+const sendCommand = async (command) => {
+  const [tab] = await chrome.tabs.query({ url: 'https://music.yandex.com/*' })
+  if (!tab) {
+    console.info('No music tab found')
+    return
+  }
+  chrome.tabs.sendMessage(tab.id, command)
+}
+
+socket.onAny((event, data) => {
+  if (event === EVENT) {
+    sendCommand(data)
+    console.info(`Command "${data}" sent from server`)
+  }
+})
+
 chrome.commands.onCommand.addListener(async (command) => {
-  const [tab] = await chrome.tabs.query({ url: 'https://music.yandex.com/*' });
-  chrome.tabs.sendMessage(tab.id, command);
-  console.info(`Command "${command}" sent`)
-});
+  if (isLocal) {
+    sendCommand(command)
+    console.info(`Command "${command}" sent locally`)
+  } else {
+    socket.emit(EVENT, command)
+  }
+})

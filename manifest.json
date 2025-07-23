@@ -5,7 +5,8 @@
   "description": "Media keys are for controlling the music!",
   "default_locale": "en",
   "background": {
-    "service_worker": "service-worker.js"
+    "service_worker": "service-worker.js",
+    "type": "module"
   },
   "permissions": ["tabs"],
   "content_scripts": [
@@ -15,6 +16,14 @@
     }
   ],
   "commands": {
+    "test": {
+      "suggested_key": {
+        "default": "Ctrl+U",
+        "mac": "Command+U"
+      },
+      "description": "Test",
+      "global": true
+    },
     "play": {
       "suggested_key": {
         "default": "MediaPlayPause"
