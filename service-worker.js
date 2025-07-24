@@ -27,6 +27,7 @@ socket.onAny((event, data) => {
 
 chrome.runtime.onMessage.addListener((payload) => {
   socket.emit('song', payload)
+  console.info(`Recieved song info:\n${payload}"`)
 })
 
 chrome.commands.onCommand.addListener(async (command) => {
