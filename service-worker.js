@@ -21,7 +21,7 @@ const sendCommand = async (command) => {
 socket.onAny((event, data) => {
   if (event === EVENT) {
     sendCommand(data)
-    console.info(`Command "${data}" sent from server`)
+    console.info(`Command "${data}" recieved from server`)
   }
 })
 
@@ -31,5 +31,6 @@ chrome.commands.onCommand.addListener(async (command) => {
     console.info(`Command "${command}" sent locally`)
   } else {
     socket.emit(EVENT, command)
+    console.info(`Command "${command}" sent to server`)
   }
 })
