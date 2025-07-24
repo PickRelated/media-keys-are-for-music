@@ -1,0 +1,41 @@
+/* eslint-disable linebreak-style */
+module.exports = {
+  env: {
+    browser: true,
+    commonjs: true,
+    es2020: true,
+  },
+  extends: ['airbnb-base'],
+  globals: {
+    chrome: 'readonly',
+  },
+  parserOptions: {
+    ecmaVersion: 12,
+  },
+  plugins: ['sort-keys-fix'],
+  rules: {
+    'function-paren-newline': 'off',
+    'global-require': 'off',
+    'guard-for-in': 'off',
+    'implicit-arrow-linebreak': 'off',
+    indent: ['error', 2, { SwitchCase: 1, ignoredNodes: ['TemplateLiteral'], offsetTernaryExpressions: true }],
+    'linebreak-style': ['error', 'unix'],
+    'max-len': ['error', { code: 120 }],
+    'no-await-in-loop': 'off',
+    'no-case-declarations': 'off',
+    'no-console': ['error', { allow: ['info', 'error'] }],
+    'no-continue': 'off',
+    'no-plusplus': 'off',
+    'no-prototype-builtins': 'off',
+    'no-restricted-syntax': 'off',
+    'no-shadow': 'off',
+    'no-underscore-dangle': 'off',
+    'no-unused-expressions': 'off',
+    'object-curly-newline': 'off',
+    'operator-linebreak': ['error', 'after'],
+    radix: 'off',
+    semi: ['error', 'never'],
+    'sort-keys-fix/sort-keys-fix': 'warn',
+    'template-curly-spacing': 'off',
+  },
+}

@@ -1,6 +1,6 @@
 import { io } from 'https://cdn.socket.io/4.8.1/socket.io.esm.min.js'
 
-const socket = io('http://websockets.pickrelated.com', { transports: ['http', 'websocket'] })
+const socket = io('http://localhost:3333', { transports: ['websocket'] })
 socket.connect()
 socket.on('connect', () => console.info(`Connected to socket with id ${socket.id}`))
 socket.on('connect_error', (err) => console.error(err))

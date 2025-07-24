@@ -1,35 +1,30 @@
+const getByAriaLabel = (ariaLabel) =>
+  document.querySelector('div[class^="PlayerBar"')?.querySelector(`[aria-label^="${ariaLabel}"]`)
+const getAriaLabel = (ariaLabel) => getByAriaLabel(ariaLabel)?.getAttribute('aria-label')
+
 chrome.runtime.onMessage.addListener((command) => {
   console.info(`Command "${command}" recieved`)
-  const playBarDiv = document.querySelector('div[class^="PlayerBar"') || document
-
   switch (command) {
     case 'play': {
-      ;(
-        playBarDiv.querySelector('button[aria-label="Playback"]') ||
-        playBarDiv.querySelector('button[aria-label="Pause"]')
-      )?.click()
+      const playPause = getByAriaLabel('Playback') || getByAriaLabel('Pause')
+      playPause?.click()
       break
     }
     case 'next': {
-      playBarDiv.querySelector('button[aria-label="Next song"]')?.click()
+      getByAriaLabel('Next song')?.click()
       break
     }
     case 'previous': {
-      playBarDiv.querySelector('button[aria-label="Previous song"]')?.click()
+      getByAriaLabel('Previous song')?.click()
       break
     }
+    default:
   }
 })
 
 setInterval(() => {
-  const track = document
-    .querySelector('a[aria-label^="Track"]')
-    ?.getAttribute('aria-label')
-    ?.replace(/^Track /, '')
-  const artist = document
-    .querySelector('a[aria-label^="Artist"]')
-    ?.getAttribute('aria-label')
-    ?.replace(/^Artist /, '')
+  const track = getAriaLabel('Track')?.replace(/^Track /, '')
+  const artist = getAriaLabel('Artist')?.replace(/^Artist /, '')
 
   if (!track || !artist) {
     return
