@@ -2,6 +2,17 @@ const getByAriaLabel = (ariaLabel) =>
   document.querySelector('div[class^="PlayerBar"')?.querySelector(`[aria-label^="${ariaLabel}"]`)
 const getAriaLabel = (ariaLabel) => getByAriaLabel(ariaLabel)?.getAttribute('aria-label')
 
+const sendSong = () => {
+  const track = getAriaLabel('Track')?.replace(/^Track /, '')
+  const artist = getAriaLabel('Artist')?.replace(/^Artist /, '')
+
+  if (!track || !artist) {
+    return
+  }
+
+  chrome.runtime.sendMessage(`${track}\nby ${artist}`)
+}
+
 chrome.runtime.onMessage.addListener((command) => {
   console.info(`Command "${command}" recieved`)
   switch (command) {
@@ -12,23 +23,16 @@ chrome.runtime.onMessage.addListener((command) => {
     }
     case 'next': {
       getByAriaLabel('Next song')?.click()
+      setTimeout(() => sendSong, 500)
       break
     }
     case 'previous': {
       getByAriaLabel('Previous song')?.click()
+      setTimeout(() => sendSong, 500)
       break
     }
     default:
   }
 })
 
-setInterval(() => {
-  const track = getAriaLabel('Track')?.replace(/^Track /, '')
-  const artist = getAriaLabel('Artist')?.replace(/^Artist /, '')
-
-  if (!track || !artist) {
-    return
-  }
-
-  chrome.runtime.sendMessage(`${track}\nby ${artist}`)
-}, 5000)
+setInterval(sendSong, 5000)
