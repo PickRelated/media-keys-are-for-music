@@ -1,10 +1,10 @@
-const getByAriaLabel = (ariaLabel) =>
-  document.querySelector('div[class^="PlayerBar"')?.querySelector(`[aria-label^="${ariaLabel}"]`)
-const getAriaLabel = (ariaLabel) => getByAriaLabel(ariaLabel)?.getAttribute('aria-label')
+const getByAriaLabel = (ariaLabel, fuzzy) =>
+  document.querySelector('div[class^="PlayerBar"')?.querySelector(`[aria-label${fuzzy ? '^' : ''}="${ariaLabel}"]`)
+const getAriaLabel = (ariaLabel, fuzzy = false) => getByAriaLabel(ariaLabel, fuzzy)?.getAttribute('aria-label')
 
 const sendSong = () => {
-  const track = getAriaLabel('Track')?.replace(/^Track /, '')
-  const artist = getAriaLabel('Artist')?.replace(/^Artist /, '')
+  const track = getAriaLabel('Track', true)?.replace(/^Track /, '')
+  const artist = getAriaLabel('Artist', true)?.replace(/^Artist /, '')
 
   if (!track || !artist) {
     return
