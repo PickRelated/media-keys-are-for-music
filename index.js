@@ -21,7 +21,7 @@ chrome.runtime.onMessage.addListener((command) => {
   }
 })
 
-setInterval(async () => {
+setInterval(() => {
   const track = document
     .querySelector('a[aria-label^="Track"]')
     ?.getAttribute('aria-label')
@@ -30,7 +30,10 @@ setInterval(async () => {
     .querySelector('a[aria-label^="Artist"]')
     ?.getAttribute('aria-label')
     ?.replace(/^Artist /, '')
-  if (track?.length && artist?.length) {
-    chrome.runtime.sendMessage(`${artist}\n${track}`)
+
+  if (!track || !artist) {
+    return
   }
+
+  chrome.runtime.sendMessage(`${track}\nby ${artist}`)
 }, 5000)
