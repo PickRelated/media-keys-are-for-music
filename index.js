@@ -20,3 +20,17 @@ chrome.runtime.onMessage.addListener((command) => {
     }
   }
 })
+
+setInterval(async () => {
+  const track = document
+    .querySelector('a[aria-label^="Track"]')
+    ?.getAttribute('aria-label')
+    ?.replace(/^Track /, '')
+  const artist = document
+    .querySelector('a[aria-label^="Artist"]')
+    ?.getAttribute('aria-label')
+    ?.replace(/^Artist /, '')
+  if (track?.length && artist?.length) {
+    chrome.runtime.sendMessage(`${artist}\n${track}`)
+  }
+}, 5000)

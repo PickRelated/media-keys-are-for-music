@@ -25,6 +25,10 @@ socket.onAny((event, data) => {
   }
 })
 
+chrome.runtime.onMessage.addListener((payload) => {
+  socket.emit('song', payload)
+})
+
 chrome.commands.onCommand.addListener(async (command) => {
   if (isLocal) {
     sendCommand(command)
