@@ -10,18 +10,4 @@ module.exports = {
   trailingComma: 'all',
   printWidth: 120,
   embeddedLanguageFormatting: 'off',
-  overrides: [
-    {
-      files: [
-        'utils/migrateProjectLabelSortIndex.js',
-        'utils/migrateSitemapPageBlocksInRuntime.js',
-        'utils/migrateSitemapPageSortIndex.js',
-        'utils/migrateWorkspaceLabelSortIndex.js',
-        'utils/migrateWireframePrimitives/index.js',
-      ],
-      options: {
-        printWidth: 1000,
-      },
-    },
-  ],
 }
