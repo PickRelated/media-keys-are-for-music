@@ -11,7 +11,7 @@
   },
   "permissions": ["tabs", "identity", "identity.email"],
   "oauth2": {
-    "client_id": "13483591007-scote8ftj03or7pe19sucq0sp4n9s7k9.apps.googleusercontent.com",
+    "client_id": "13483591007-5fit24bbjpttickhakto2gkokknfilbu.apps.googleusercontent.com",
     "scopes": ["profile"]
   },
   "content_scripts": [
