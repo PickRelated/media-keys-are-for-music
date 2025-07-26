@@ -16,19 +16,11 @@
   },
   "content_scripts": [
     {
-      "matches": ["https://music.yandex.com/*", "https://music.yandex.ru/*"],
+      "matches": ["https://music.yandex.com/*"],
       "js": ["index.js"]
     }
   ],
   "commands": {
-    "test": {
-      "suggested_key": {
-        "default": "Ctrl+U",
-        "mac": "Command+U"
-      },
-      "description": "Test",
-      "global": true
-    },
     "play": {
       "suggested_key": {
         "default": "MediaPlayPause"
