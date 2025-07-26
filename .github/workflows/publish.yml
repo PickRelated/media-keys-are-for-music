@@ -1,7 +1,5 @@
 name: Publish to Chrome Web Store
-on:
-  release:
-    types: [published]
+on: workflow_dispatch
 
 jobs:
   build:
