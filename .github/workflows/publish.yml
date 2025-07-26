@@ -1,11 +1,11 @@
-name: Create Release
+name: Publish to Chrome Web Store
 on:
-  push:
-    branches: [master]
+  release:
+    types: [published]
 
 jobs:
   build:
-    name: Create Release
+    name: Publish to Chrome Web Store
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -20,9 +20,11 @@ jobs:
       - name: Create a zip
         run: zip -r media-keys-are-for-music.zip *.* *
 
-      - name: Create Release
-        uses: softprops/action-gh-release@v2
+      - name: Upload & release
+        uses: mnao305/chrome-extension-upload@v5.0.0
         with:
-          tag_name: ${{ env.VERSION }}
-          files: media-keys-are-for-music.zip
-          draft: true
+          file-path: media-keys-are-for-music.zip
+          extension-id: kpekifldnpcfilmdhgphnfgmnamgkmhj
+          client-id: ${{ secrets.CLIENT_ID }}
+          client-secret: ${{ secrets.CLIENT_SECRET }}
+          refresh-token: ${{ secrets.REFRESH_TOKEN }}
