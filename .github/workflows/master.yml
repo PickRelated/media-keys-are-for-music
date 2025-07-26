@@ -11,8 +11,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set Timestamp
-        run: echo "TIMESTAMP=$(date +'%Y-%m-%dT%H%M')" >> $GITHUB_ENV
+      - name: Set version
+        run: echo "VERSION=$(cat manifest.json | grep '\"version\"' | sed -e 's/\([^0-9.]\)*//g')" >> $GITHUB_ENV
 
       - name: Removing unnecessary files
         run: rm -r .* package.json yarn.lock *.md
@@ -23,14 +23,14 @@ jobs:
       - name: Create Release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ env.TIMESTAMP }}
+          tag_name: ${{ env.VERSION }}
           files: media-keys-are-for-music.zip
 
-    # - name: Upload & release
-    #   uses: mnao305/chrome-extension-upload@v5.0.0
-    #   with:
-    #     file-path: media-keys-are-for-music.zip
-    #     extension-id: fplnaffkfkcdoneembhedfkdoldhiglm
-    #     client-id: ${{ secrets.CLIENT_ID }}
-    #     client-secret: ${{ secrets.CLIENT_SECRET }}
-    #     refresh-token: ${{ secrets.REFRESH_TOKEN }}
+      - name: Upload & release
+        uses: mnao305/chrome-extension-upload@v5.0.0
+        with:
+          file-path: media-keys-are-for-music.zip
+          extension-id: kpekifldnpcfilmdhgphnfgmnamgkmhj
+          client-id: ${{ secrets.CLIENT_ID }}
+          client-secret: ${{ secrets.CLIENT_SECRET }}
+          refresh-token: ${{ secrets.REFRESH_TOKEN }}
