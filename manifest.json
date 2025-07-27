@@ -4,18 +4,11 @@
   "manifest_version": 3,
   "description": "Media keys are for controlling the music!",
   "default_locale": "en",
-  "icons": {
-    "128": "icons/icon128.png"
-  },
-  "background": {
-    "service_worker": "service-worker.js",
-    "type": "module"
-  },
-  "permissions": ["tabs", "identity", "identity.email"],
-  "oauth2": {
-    "client_id": "13483591007-5fit24bbjpttickhakto2gkokknfilbu.apps.googleusercontent.com",
-    "scopes": ["profile"]
-  },
+  "icons": { "128": "icons/icon128.png" },
+  "action": { "default_popup": "options/options.html" },
+  "options_page": "options/options.html",
+  "background": { "service_worker": "service-worker.js", "type": "module" },
+  "permissions": ["storage", "tabs", "identity", "identity.email"],
   "content_scripts": [
     {
       "matches": ["https://music.yandex.com/*"],
@@ -23,26 +16,12 @@
     }
   ],
   "commands": {
-    "play": {
-      "suggested_key": {
-        "default": "MediaPlayPause"
-      },
-      "description": "Play/pause",
-      "global": true
-    },
-    "next": {
-      "suggested_key": {
-        "default": "MediaNextTrack"
-      },
-      "description": "Next Track",
-      "global": true
-    },
-    "previous": {
-      "suggested_key": {
-        "default": "MediaPrevTrack"
-      },
-      "description": "Previous Track",
-      "global": true
-    }
+    "play": { "suggested_key": { "default": "MediaPlayPause" }, "description": "Play/pause", "global": true },
+    "next": { "suggested_key": { "default": "MediaNextTrack" }, "description": "Next Track", "global": true },
+    "previous": { "suggested_key": { "default": "MediaPrevTrack" }, "description": "Previous Track", "global": true }
+  },
+  "oauth2": {
+    "client_id": "13483591007-5fit24bbjpttickhakto2gkokknfilbu.apps.googleusercontent.com",
+    "scopes": ["profile"]
   }
 }

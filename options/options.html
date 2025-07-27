@@ -1,0 +1,28 @@
+<html>
+  <body style="width: 380px">
+    <div id="status" style="opacity: 0">Options saved</div>
+    <form>
+      <fieldset>
+        <legend>This PC media keys control</legend>
+        <div>
+          <input type="radio" name="mediaKeysControl" value="local" />
+          <label for="local">This PC</label>
+          <input type="radio" name="mediaKeysControl" value="remote" />
+          <label for="remote">Another PC</label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Remote control</legend>
+        <div>
+          <input type="checkbox" name="isControlledRemotely" />
+          <label for="isControlledRemotely">Allow (make sure only one active PC has this checked)</label>
+        </div>
+      </fieldset>
+    </form>
+    <div>
+      <button id="save">Save</button>
+    </div>
+    <script src="options.js"></script>
+  </body>
+</html>

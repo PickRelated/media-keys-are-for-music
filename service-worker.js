@@ -1,9 +1,23 @@
 import { io } from 'https://cdn.socket.io/4.8.1/socket.io.esm.min.js'
 
 const SOCKET_URL = 'http://websockets.pickrelated.com'
-const isLocal = false
 
-let email
+const defaultOptions = {
+  isControlledRemotely: true,
+  mediaKeysControl: 'local',
+}
+
+let options = {}
+
+const syncSettings = () => {
+  chrome.storage.sync.get(defaultOptions, (values) => {
+    options = values
+  })
+}
+
+chrome.storage.onChanged.addListener(syncSettings)
+
+syncSettings()
 
 const sendCommand = async (command) => {
   const [tab] = await chrome.tabs.query({ url: 'https://music.yandex.com/*' })
@@ -15,15 +29,19 @@ const sendCommand = async (command) => {
 }
 
 chrome.identity.getProfileUserInfo((userInfo) => {
-  email = userInfo.email
+  const { email } = userInfo
   const socket = io(SOCKET_URL, { query: { id: email }, transports: ['http', 'websocket'] })
   socket.connect()
   socket.on('connect', () => console.info('Connected to socket'))
   socket.on('connect_error', (err) => console.error(err))
   socket.onAny((event, data) => {
     if (event === 'message') {
-      sendCommand(data)
-      console.info(`Command "${data}" recieved from server`)
+      if (options.isControlledRemotely) {
+        sendCommand(data)
+        console.info(`Command "${data}" recieved from server`)
+      } else {
+        console.info('Remote control disabled')
+      }
     }
   })
 
@@ -33,7 +51,7 @@ chrome.identity.getProfileUserInfo((userInfo) => {
   })
 
   chrome.commands.onCommand.addListener(async (command) => {
-    if (isLocal) {
+    if (options.mediaKeysControl === 'local') {
       sendCommand(command)
       console.info(`Command "${command}" sent locally`)
     } else {
