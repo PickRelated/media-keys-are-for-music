@@ -1,9 +1,12 @@
 {
   "name": "Media keys are for music",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "manifest_version": 3,
   "description": "Media keys are for controlling the music!",
   "default_locale": "en",
+  "icons": {
+    "128": "icons/icon128.png"
+  },
   "background": {
     "service_worker": "service-worker.js",
     "type": "module"
