@@ -31,7 +31,7 @@ const getForm = () => {
 }
 
 const saveOptions = () => {
-  chrome.storage.sync.set(getForm().values, () => {
+  chrome.storage.local.set(getForm().values, () => {
     const status = document.getElementById('status')
     status.style.opacity = 1
     setTimeout(() => {
@@ -41,7 +41,7 @@ const saveOptions = () => {
 }
 
 const restoreOptions = () => {
-  chrome.storage.sync.get(defaultOptions, (values) =>
+  chrome.storage.local.get(defaultOptions, (values) =>
     getForm().forEachField((field, name) => {
       // eslint-disable-next-line no-param-reassign
       field.value = values[name]

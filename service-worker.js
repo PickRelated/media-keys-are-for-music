@@ -10,7 +10,7 @@ const defaultOptions = {
 let options = {}
 
 const syncSettings = () => {
-  chrome.storage.sync.get(defaultOptions, (values) => {
+  chrome.storage.local.get(defaultOptions, (values) => {
     options = values
   })
 }

@@ -1,6 +1,6 @@
 {
   "name": "Media keys are for music",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "manifest_version": 3,
   "description": "Media keys are for controlling the music!",
   "default_locale": "en",
