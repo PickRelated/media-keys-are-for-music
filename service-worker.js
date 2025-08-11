@@ -45,9 +45,10 @@ chrome.identity.getProfileUserInfo((userInfo) => {
     }
   })
 
-  chrome.runtime.onMessage.addListener((payload) => {
-    socket.emit('song', payload)
-    console.info(`Recieved song info:\n${payload}"`)
+  chrome.runtime.onMessage.addListener((message) => {
+    const { event, payload } = message
+    socket.emit(event, payload)
+    console.info(`Recieved event ${event}: ${JSON.stringify(payload)}`)
   })
 
   chrome.commands.onCommand.addListener(async (command) => {

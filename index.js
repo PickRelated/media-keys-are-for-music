@@ -1,16 +1,29 @@
+const getPlayerBar = () => document.querySelector('div[class^="PlayerBar"')
+const getImage = () => getPlayerBar()?.querySelector('img')
 const getByAriaLabel = (ariaLabel, fuzzy) =>
-  document.querySelector('div[class^="PlayerBar"')?.querySelector(`[aria-label${fuzzy ? '^' : ''}="${ariaLabel}"]`)
+  getPlayerBar()?.querySelector(`[aria-label${fuzzy ? '^' : ''}="${ariaLabel}"]`)
 const getAriaLabel = (ariaLabel, fuzzy = false) => getByAriaLabel(ariaLabel, fuzzy)?.getAttribute('aria-label')
 
-const sendSong = () => {
-  const track = getAriaLabel('Track', true)?.replace(/^Track /, '')
-  const artist = getAriaLabel('Artist', true)?.replace(/^Artist /, '')
+const updateStatus = () => {
+  const track = getAriaLabel('Track', true)
+    ?.replace(/^Track /, '')
+    ?.trim()
+  const artist = getAriaLabel('Artist', true)
+    ?.replace(/^Artist /, '')
+    ?.trim()
 
-  if (!track || !artist) {
-    return
+  const cover = getImage()?.src
+
+  const like = getByAriaLabel('Like')
+  const isLiked = like ? like.ariaPressed : 'unknown'
+
+  const play = getAriaLabel('Playback')
+  const pause = getAriaLabel('Pause')
+  const playbackStatus = (play && 'paused') || (pause && 'playing') || 'unknown'
+
+  if (track && artist) {
+    chrome.runtime.sendMessage({ event: 'song', payload: { artist, cover, isLiked, playbackStatus, track } })
   }
-
-  chrome.runtime.sendMessage(`${track}\nby ${artist}`)
 }
 
 chrome.runtime.onMessage.addListener((command) => {
@@ -23,16 +36,18 @@ chrome.runtime.onMessage.addListener((command) => {
     }
     case 'next': {
       getByAriaLabel('Next song')?.click()
-      setTimeout(() => sendSong, 500)
+      setTimeout(() => updateStatus, 1000)
       break
     }
     case 'previous': {
       getByAriaLabel('Previous song')?.click()
-      setTimeout(() => sendSong, 500)
+      setTimeout(() => updateStatus, 1000)
       break
     }
     default:
   }
 })
 
-setInterval(sendSong, 5000)
+setInterval(updateStatus, 5000)
+
+updateStatus()
